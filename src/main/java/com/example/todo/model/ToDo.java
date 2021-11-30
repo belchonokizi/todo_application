@@ -1,10 +1,8 @@
 package com.example.todo.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class ToDo {
-
     private Long id;
     private Long parentId;
 
@@ -13,19 +11,28 @@ public class ToDo {
     private LocalDateTime deadline;
     private boolean isDone;
 
-    private List<ToDo> children;
+    private ToDo child;
 
     public ToDo() {
     }
 
-    public ToDo (Long id, Long parentId, String description, LocalDateTime createdAt, LocalDateTime deadline, boolean isDone, List<ToDo> children) {
+    public ToDo(Long id, Long parentId, String description, LocalDateTime createdAt, LocalDateTime deadline, boolean isDone, ToDo child) {
         this.id = id;
         this.parentId = parentId;
         this.description = description;
         this.createdAt = createdAt;
         this.deadline = deadline;
         this.isDone = isDone;
-        this.children = children;
+        this.child = child;
+    }
+
+    public ToDo(Long id, Long parentId, String description, LocalDateTime createdAt, LocalDateTime deadline, boolean isDone) {
+        this.id = id;
+        this.parentId = parentId;
+        this.description = description;
+        this.createdAt = createdAt;
+        this.deadline = deadline;
+        this.isDone = isDone;
     }
 
     public Long getId() {
@@ -76,12 +83,12 @@ public class ToDo {
         isDone = done;
     }
 
-    public List<ToDo> getChildren() {
-        return children;
+    public ToDo getChild() {
+        return child;
     }
 
-    public void setChildren(List<ToDo> children) {
-        this.children = children;
+    public void setChildren(ToDo child) {
+        this.child = child;
     }
 
     @Override
@@ -93,7 +100,7 @@ public class ToDo {
                 ", createdAt=" + createdAt +
                 ", deadline=" + deadline +
                 ", isDone=" + isDone +
-                ", child=" + children +
+                ", child=" + child +
                 '}';
     }
 }

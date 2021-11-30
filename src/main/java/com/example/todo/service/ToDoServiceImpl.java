@@ -2,19 +2,19 @@ package com.example.todo.service;
 
 import com.example.todo.database_connection.DatabaseConnection;
 import com.example.todo.model.ToDo;
+import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ToDoServiceImpl implements TodoService{
+@Service
+public class ToDoServiceImpl implements TodoService {
     private static final DatabaseConnection CONNECTION = new DatabaseConnection();
 
     @Override
-    public ToDo createToDo(Long id, Long parentId, String description, LocalDateTime createdAt, LocalDateTime deadline, boolean isDone, List<ToDo> children) {
-        return new ToDo(id, parentId, description, createdAt, deadline, isDone, children);
+    public void createToDo(ToDo entity) {
+        CONNECTION.addToDo(entity);
     }
 
     @Override
@@ -52,11 +52,5 @@ public class ToDoServiceImpl implements TodoService{
     @Override
     public void sendMessageAboutAccessError() {
 
-    }
-
-    public static void main(String[] args) {
-        ToDoServiceImpl toDoService = new ToDoServiceImpl();
-//        toDoService.getUnfulfilledToDos().forEach(System.out::println);
-        toDoService.markAsDone(1L);
     }
 }
