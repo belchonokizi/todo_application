@@ -2,6 +2,7 @@ package com.example.todo.database_connection;
 
 import com.example.todo.model.ToDo;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+@Configuration
 public class DatabaseConnection {
 
     @Value("${spring.datasource.jdbc-url}")
