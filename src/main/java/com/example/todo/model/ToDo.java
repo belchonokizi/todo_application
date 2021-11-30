@@ -28,16 +28,6 @@ public class ToDo {
         this.children = children;
     }
 
-
-    public ToDo(Long id, Long parentId, String description, LocalDateTime createdAt, LocalDateTime deadline, boolean isDone) {
-        this.id = id;
-        this.parentId = parentId;
-        this.description = description;
-        this.createdAt = createdAt;
-        this.deadline = deadline;
-        this.isDone = isDone;
-    }
-
     public Long getId() {
         return id;
     }
