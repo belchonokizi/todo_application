@@ -1,8 +1,11 @@
 package com.example.todo.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class ToDo {
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     private Long id;
     private Long parentId;
 
@@ -11,19 +14,17 @@ public class ToDo {
     private LocalDateTime deadline;
     private boolean isDone;
 
-    private ToDo child;
-
-    public ToDo() {
+    public ToDo(String description, String deadline) {
+        this(null, description, deadline);
     }
 
-    public ToDo(Long id, Long parentId, String description, LocalDateTime createdAt, LocalDateTime deadline, boolean isDone, ToDo child) {
-        this.id = id;
+    public ToDo(Long parentId, String description, String deadline) {
+        this.id = 1L; //ToDo: select id from todos order by id limit 1
         this.parentId = parentId;
         this.description = description;
-        this.createdAt = createdAt;
-        this.deadline = deadline;
-        this.isDone = isDone;
-        this.child = child;
+        this.createdAt = LocalDateTime.now();
+        this.deadline = LocalDateTime.parse(deadline, FORMATTER);
+        this.isDone = false;
     }
 
     public ToDo(Long id, Long parentId, String description, LocalDateTime createdAt, LocalDateTime deadline, boolean isDone) {
@@ -83,14 +84,6 @@ public class ToDo {
         isDone = done;
     }
 
-    public ToDo getChild() {
-        return child;
-    }
-
-    public void setChildren(ToDo child) {
-        this.child = child;
-    }
-
     @Override
     public String toString() {
         return "ToDo{" +
@@ -100,7 +93,6 @@ public class ToDo {
                 ", createdAt=" + createdAt +
                 ", deadline=" + deadline +
                 ", isDone=" + isDone +
-                ", child=" + child +
                 '}';
     }
 }

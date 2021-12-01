@@ -10,7 +10,7 @@ public interface TodoService {
 
     void markAsDone(Long id);
 
-    List<ToDo> getUnfulfilledToDos();
+    List<ToDo> getInProgressToDos();
 
     void sendMessageAboutDeadline();
 
