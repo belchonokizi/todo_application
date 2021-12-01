@@ -1,6 +1,6 @@
 spring:
   datasource:
-    jdbc-url: "jdbc:h2:C:\\Users\\belch\\demo\\src\\main\\java\\database\\ToDos;MV_STORE=false"
-    username: "bestuser"
-    password: "bestuser"
+    jdbc-url: jdbc:h2:mem:ToDos
+    username: bestuser
+    password: bestuser
 
