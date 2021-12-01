@@ -12,9 +12,9 @@ public interface TodoService {
 
     List<ToDo> getInProgressToDos();
 
-    void sendMessageAboutDeadline();
-
-    void sendMessageAboutIllegalOperation();
-
-    void sendMessageAboutAccessError();
+//    void sendMessageAboutDeadline();
+//
+//    void sendMessageAboutIllegalOperation(Long id);
+//
+//    void sendMessageAboutAccessError();
 }

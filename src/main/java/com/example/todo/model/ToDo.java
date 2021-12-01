@@ -2,6 +2,7 @@ package com.example.todo.model;
 
 import com.example.todo.service.ToDoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

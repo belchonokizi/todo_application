@@ -4,6 +4,8 @@ import com.example.todo.model.ToDo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.sql.ResultSet;
@@ -15,6 +17,7 @@ import java.util.List;
 import static java.util.Comparator.comparing;
 
 @Service
+@EnableScheduling
 public class ToDoServiceImpl implements TodoService {
     private final JdbcTemplate jdbcTemplate;
 
@@ -51,24 +54,33 @@ public class ToDoServiceImpl implements TodoService {
         return toDoList;
     }
 
-    @Override
+    @Scheduled(fixedRate = 3600000)
+//    @Override
     public void sendMessageAboutDeadline() {
-
+        String query = "SELECT * FROM TODO WHERE DEADLINE = " + LocalDateTime.now().minusHours(1);
+        List<ToDo> toDoList = jdbcTemplate.query(query, new Object[]{}, new TodoRowMapper());
+        for (ToDo toDo : toDoList) {
+            System.out.println("The deadline for completing Todo with id = " + toDo.getId() + "ends in an hour");
+        }
     }
 
-    @Override
-    public void sendMessageAboutIllegalOperation() {
-
+//    @Override
+    public void sendMessageAboutIllegalOperation(Long id) {
+        System.out.println("Todo with id = " + id + " does not exist");
     }
 
-    @Override
+//    @Override
     public void sendMessageAboutAccessError() {
 
     }
 
     private ToDo getTodoById(long id) {
         String query = "SELECT * FROM TODO WHERE ID = ?";
-        return jdbcTemplate.queryForObject(query, new Object[] {id}, new TodoRowMapper());
+        ToDo toDo = jdbcTemplate.queryForObject(query, new Object[]{id}, new TodoRowMapper());
+        if (toDo == null) {
+            sendMessageAboutIllegalOperation(id);
+        }
+        return toDo;
     }
 
     private List<ToDo> getTodoByParentId(long parentId) {
@@ -80,6 +92,8 @@ public class ToDoServiceImpl implements TodoService {
         Long maxId = jdbcTemplate.queryForObject("SELECT MAX(ID) FROM TODO", Long.class);
         return maxId++;
     }
+
+
 
     static class TodoRowMapper implements RowMapper<ToDo> {
         final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
