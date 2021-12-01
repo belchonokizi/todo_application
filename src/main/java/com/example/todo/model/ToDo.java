@@ -1,8 +1,13 @@
 package com.example.todo.model;
 
+import com.example.todo.service.ToDoServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@Component
 public class ToDo {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -14,12 +19,19 @@ public class ToDo {
     private LocalDateTime deadline;
     private boolean isDone;
 
+    private ToDoServiceImpl toDoService;
+
+    @Autowired
+    public ToDo(ToDoServiceImpl toDoService) {
+        this.toDoService = toDoService;
+    }
+
     public ToDo(String description, String deadline) {
         this(null, description, deadline);
     }
 
     public ToDo(Long parentId, String description, String deadline) {
-        this.id = 1L; //ToDo: select id from todos order by id limit 1
+        this.id = toDoService.generateId();
         this.parentId = parentId;
         this.description = description;
         this.createdAt = LocalDateTime.now();

@@ -9,7 +9,7 @@ import org.springframework.shell.standard.ShellOption;
 
 @ShellComponent
 public class TodoCommands {
-    private ToDoServiceImpl toDoService;
+    private final ToDoServiceImpl toDoService;
 
     @Autowired
     public TodoCommands(ToDoServiceImpl toDoService) {
@@ -21,9 +21,21 @@ public class TodoCommands {
         toDoService.createToDo(new ToDo(description, deadline));
     }
 
+    @ShellMethod
     public void createChild(@ShellOption({"-P", "--parentId"}) long parentId,
                             @ShellOption({"-D", "--description"}) String description,
                             @ShellOption({"-Dl", "--deadline"}) String deadline) {
         toDoService.createToDo(new ToDo(parentId, description, deadline));
     }
+
+    @ShellMethod
+    public void markIsDone(@ShellOption({"-id"}) long id) {
+        toDoService.markAsDone(id);
+    }
+
+    @ShellMethod
+    public void getInProgressTodos() {
+        toDoService.getInProgressToDos();
+    }
+
 }
